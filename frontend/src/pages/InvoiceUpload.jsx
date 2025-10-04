@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { BASE_URL } from '../config/api';
 import { AlertCircle, CheckCircle, XCircle, Info, Users } from 'lucide-react';
 import FileUploader from '../components/FileUploader';
 import ResultsTable from '../components/ResultsTable';
