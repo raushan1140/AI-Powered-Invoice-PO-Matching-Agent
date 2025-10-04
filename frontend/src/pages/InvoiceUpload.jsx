@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BASE_URL } from '../config/api';
+import { API } from '../config/api';
 import { AlertCircle, CheckCircle, XCircle, Info, Users } from 'lucide-react';
 import FileUploader from '../components/FileUploader';
 import ResultsTable from '../components/ResultsTable';
@@ -9,14 +9,28 @@ const InvoiceUpload = () => {
   const [loading, setLoading] = useState(false);
   const [teamId, setTeamId] = useState('');
 
-  const handleFileUpload = (result) => {
-    setLoading(false);
-    setUploadResult(result);
-  };
+  const handleFileUpload = async (file) => {
+    try {
+      setLoading(true);
+      setUploadResult(null);
 
-  const handleUploadStart = () => {
-    setLoading(true);
-    setUploadResult(null);
+      const formData = new FormData();
+      formData.append('file', file);
+      if (teamId) formData.append('team_id', teamId);
+
+      const response = await fetch(`${API.INVOICES}/upload`, {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+      setUploadResult(result);
+    } catch (error) {
+      console.error('Upload error:', error);
+      setUploadResult({ error: 'Failed to upload invoice. Please try again.' });
+    } finally {
+      setLoading(false);
+    }
   };
 
   const getValidationStatusIcon = (status) => {
@@ -54,7 +68,6 @@ const InvoiceUpload = () => {
 
     const { validation_result } = uploadResult;
     const summary = validation_result?.summary;
-
     if (!summary) return null;
 
     return (
@@ -62,9 +75,7 @@ const InvoiceUpload = () => {
         <div className="flex items-start space-x-4">
           {getValidationStatusIcon(summary.status)}
           <div className="flex-1">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">
-              Validation Results
-            </h3>
+            <h3 className="text-lg font-semibold text-gray-900 mb-2">Validation Results</h3>
             <p className="text-gray-700 mb-4">{summary.message}</p>
 
             {/* Summary Stats */}
@@ -95,7 +106,9 @@ const InvoiceUpload = () => {
                   {validation_result.matches.map((match, index) => (
                     <div key={index} className="bg-green-100 p-3 rounded-lg">
                       <p className="font-medium">PO: {match.po_id}</p>
-                      <p className="text-sm text-gray-600">Match Score: {match.match_score.toFixed(1)}%</p>
+                      <p className="text-sm text-gray-600">
+                        Match Score: {match.match_score.toFixed(1)}%
+                      </p>
                     </div>
                   ))}
                 </div>
@@ -108,22 +121,35 @@ const InvoiceUpload = () => {
                 <h4 className="text-md font-semibold text-red-700 mb-2">Issues Found</h4>
                 <div className="space-y-2">
                   {validation_result.mismatches.map((issue, index) => (
-                    <div key={index} className={`p-3 rounded-lg ${
-                      issue.severity === 'high' ? 'bg-red-100' :
-                      issue.severity === 'medium' ? 'bg-yellow-100' : 'bg-blue-100'
-                    }`}>
+                    <div
+                      key={index}
+                      className={`p-3 rounded-lg ${
+                        issue.severity === 'high'
+                          ? 'bg-red-100'
+                          : issue.severity === 'medium'
+                          ? 'bg-yellow-100'
+                          : 'bg-blue-100'
+                      }`}
+                    >
                       <div className="flex justify-between items-start">
                         <p className="font-medium">{issue.message}</p>
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${
-                          issue.severity === 'high' ? 'bg-red-200 text-red-800' :
-                          issue.severity === 'medium' ? 'bg-yellow-200 text-yellow-800' : 'bg-blue-200 text-blue-800'
-                        }`}>
+                        <span
+                          className={`px-2 py-1 rounded text-xs font-medium ${
+                            issue.severity === 'high'
+                              ? 'bg-red-200 text-red-800'
+                              : issue.severity === 'medium'
+                              ? 'bg-yellow-200 text-yellow-800'
+                              : 'bg-blue-200 text-blue-800'
+                          }`}
+                        >
                           {issue.severity}
                         </span>
                       </div>
                       {issue.details && (
                         <div className="mt-2 text-sm text-gray-600">
-                          <pre className="whitespace-pre-wrap">{JSON.stringify(issue.details, null, 2)}</pre>
+                          <pre className="whitespace-pre-wrap">
+                            {JSON.stringify(issue.details, null, 2)}
+                          </pre>
                         </div>
                       )}
                     </div>
@@ -141,31 +167,28 @@ const InvoiceUpload = () => {
     if (!uploadResult || uploadResult.error || !uploadResult.invoice_data) return null;
 
     const { invoice_data } = uploadResult;
-    const mainData = [{
-      'Invoice Number': invoice_data.invoice_number || 'N/A',
-      'Vendor': invoice_data.vendor || 'N/A',
-      'Date': invoice_data.date || 'N/A',
-      'Total': invoice_data.total ? `$${invoice_data.total}` : 'N/A'
-    }];
+    const mainData = [
+      {
+        'Invoice Number': invoice_data.invoice_number || 'N/A',
+        Vendor: invoice_data.vendor || 'N/A',
+        Date: invoice_data.date || 'N/A',
+        Total: invoice_data.total ? `$${invoice_data.total}` : 'N/A',
+      },
+    ];
 
     return (
       <>
-        <ResultsTable 
-          data={mainData} 
-          title="Extracted Invoice Information" 
-          downloadable={true}
-        />
-        
+        <ResultsTable data={mainData} title="Extracted Invoice Information" downloadable />
         {invoice_data.line_items && invoice_data.line_items.length > 0 && (
-          <ResultsTable 
-            data={invoice_data.line_items.map(item => ({
-              'Item': item.item || 'N/A',
-              'Quantity': item.qty || 0,
+          <ResultsTable
+            data={invoice_data.line_items.map((item) => ({
+              Item: item.item || 'N/A',
+              Quantity: item.qty || 0,
               'Unit Price': item.unit_price ? `$${item.unit_price}` : '$0.00',
-              'Total': item.total ? `$${item.total}` : '$0.00'
-            }))} 
-            title="Line Items" 
-            downloadable={true}
+              Total: item.total ? `$${item.total}` : '$0.00',
+            }))}
+            title="Line Items"
+            downloadable
           />
         )}
       </>
@@ -209,11 +232,7 @@ const InvoiceUpload = () => {
       {/* File Upload */}
       <div className="card">
         <h3 className="text-lg font-semibold text-gray-900 mb-4">Upload Invoice</h3>
-        <FileUploader 
-          onFileUpload={handleFileUpload}
-          loading={loading}
-          teamId={teamId}
-        />
+        <FileUploader onFileUpload={handleFileUpload} loading={loading} teamId={teamId} />
       </div>
 
       {/* Error Display */}
