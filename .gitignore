@@ -1,0 +1,27 @@
+﻿# OS / tooling
+.DS_Store
+Thumbs.db
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+env/
+venv/
+.env
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# Node
+node_modules/
+
+# Editor
+.vscode/
+.idea/
+
+# Ignore backend env file
+backend/.env

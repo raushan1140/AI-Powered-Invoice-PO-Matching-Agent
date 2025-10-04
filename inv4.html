@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Invoice #INV-2025-045</title>
+  <style>
+    @media print { body { margin: 0; } .no-print { display: none; } }
+    body { font-family: 'Arial', sans-serif; margin: 0; padding: 20px; background-color: #f5f5f5; }
+    .invoice-container { max-width: 800px; margin: 0 auto; background: white; padding: 40px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+    .invoice-header { display: flex; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid #2c3e50; padding-bottom: 20px; }
+    .vendor-info { flex: 1; }
+    .vendor-info h1 { color: #2c3e50; margin: 0 0 10px 0; font-size: 28px; }
+    .vendor-info p { margin: 5px 0; color: #555; }
+    .invoice-details { text-align: right; }
+    .invoice-details h2 { color: #e74c3c; margin: 0 0 15px 0; font-size: 36px; }
+    .invoice-meta { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 30px; }
+    .bill-to, .invoice-info { background: #f8f9fa; padding: 20px; border-left: 4px solid #3498db; }
+    .bill-to h3, .invoice-info h3 { color: #2c3e50; margin-top: 0; margin-bottom: 15px; }
+    .invoice-table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+    .invoice-table th { background: #2c3e50; color: white; padding: 15px 10px; text-align: left; font-weight: bold; }
+    .invoice-table th:nth-child(2), .invoice-table th:nth-child(3), .invoice-table th:nth-child(4),
+    .invoice-table td:nth-child(2), .invoice-table td:nth-child(3), .invoice-table td:nth-child(4) { text-align: center; }
+    .invoice-table td { padding: 12px 10px; border-bottom: 1px solid #ddd; }
+    .invoice-table tr:nth-child(even) { background: #f8f9fa; }
+    .total-section { float: right; width: 300px; margin-top: 20px; }
+    .total-row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid #ddd; }
+    .total-row.final { font-size: 20px; font-weight: bold; color: #2c3e50; border-bottom: 3px double #2c3e50; margin-top: 10px; padding-top: 15px; }
+    .footer { clear: both; margin-top: 50px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #666; }
+    .print-button { background: #3498db; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; margin-bottom: 20px; font-size: 16px; }
+    .print-button:hover { background: #2980b9; }
+  </style>
+</head>
+<body>
+  <div class="no-print">
+    <button class="print-button" onclick="window.print()">Print/Save as PDF</button>
+  </div>
+
+  <div class="invoice-container">
+    <div class="invoice-header">
+      <div class="vendor-info">
+        <h1>NextGen Software Pvt. Ltd.</h1>
+        <p>456 Innovation Tower</p>
+        <p>Cyber City, Gurugram, HR 122002</p>
+        <p>India</p>
+        <p>Phone: +91 9012345678</p>
+        <p>Email: accounts@nextgensoft.com</p>
+        <p>GST: 06ABCDX1234H1Z8</p>
+      </div>
+      <div class="invoice-details">
+        <h2>INVOICE</h2>
+      </div>
+    </div>
+
+    <div class="invoice-meta">
+      <div class="bill-to">
+        <h3>Bill To:</h3>
+        <p><strong>Bright Future Enterprises</strong></p>
+        <p>789 Corporate Plaza</p>
+        <p>Bandra East, Mumbai</p>
+        <p>Maharashtra 400051</p>
+        <p>India</p>
+      </div>
+      <div class="invoice-info">
+        <h3>Invoice Details:</h3>
+        <p><strong>Invoice Number:</strong> INV-2025-045</p>
+        <p><strong>Invoice Date:</strong> September 16, 2025</p>
+        <p><strong>Due Date:</strong> October 16, 2025</p>
+        <p><strong>Payment Terms:</strong> Net 30</p>
+      </div>
+    </div>
+
+    <table class="invoice-table">
+      <thead>
+        <tr>
+          <th>Item Description</th>
+          <th>Quantity</th>
+          <th>Unit Price</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Custom ERP Development</td>
+          <td>1</td>
+          <td>₹2,00,000.00</td>
+          <td>₹2,00,000.00</td>
+        </tr>
+        <tr>
+          <td>Cloud Migration Services</td>
+          <td>1</td>
+          <td>₹85,000.00</td>
+          <td>₹85,000.00</td>
+        </tr>
+        <tr>
+          <td>Training & Onboarding</td>
+          <td>3</td>
+          <td>₹10,000.00</td>
+          <td>₹30,000.00</td>
+        </tr>
+        <tr>
+          <td>Annual Support Package</td>
+          <td>1</td>
+          <td>₹50,000.00</td>
+          <td>₹50,000.00</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="total-section">
+      <div class="total-row"><span>Subtotal:</span><span>₹3,65,000.00</span></div>
+      <div class="total-row"><span>GST (18%):</span><span>₹65,700.00</span></div>
+      <div class="total-row final"><span>Total Amount:</span><span>₹4,30,700.00</span></div>
+    </div>
+
+    <div class="footer">
+      <p><strong>Payment Instructions:</strong></p>
+      <p>Bank transfer only. Account details will be shared separately.</p>
+      <p>We appreciate your business!</p>
+    </div>
+  </div>
+</body>
+</html>

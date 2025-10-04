@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #INV-2025-456</title>
+    <style>
+        @media print {
+            body { margin: 0; }
+            .no-print { display: none; }
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f0f2f5;
+        }
+        
+        .invoice-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border-radius: 8px;
+        }
+        
+        .invoice-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            border-bottom: 3px solid #8e44ad;
+            padding-bottom: 20px;
+        }
+        
+        .vendor-info {
+            flex: 1;
+        }
+        
+        .vendor-info h1 {
+            color: #8e44ad;
+            margin: 0 0 10px 0;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .vendor-info p {
+            margin: 5px 0;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .invoice-details {
+            text-align: right;
+        }
+        
+        .invoice-details h2 {
+            color: #c0392b;
+            margin: 0 0 15px 0;
+            font-size: 38px;
+            font-weight: bold;
+        }
+        
+        .invoice-meta {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .bill-to, .invoice-info {
+            background: #ecf0f1;
+            padding: 20px;
+            border-left: 5px solid #e67e22;
+            border-radius: 5px;
+        }
+        
+        .bill-to h3, .invoice-info h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+        
+        .invoice-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .invoice-table th {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            padding: 16px 12px;
+            text-align: left;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .invoice-table th:nth-child(2),
+        .invoice-table th:nth-child(3),
+        .invoice-table th:nth-child(4) {
+            text-align: center;
+        }
+        
+        .invoice-table td {
+            padding: 14px 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 14px;
+        }
+        
+        .invoice-table td:nth-child(2),
+        .invoice-table td:nth-child(3),
+        .invoice-table td:nth-child(4) {
+            text-align: center;
+        }
+        
+        .invoice-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .invoice-table tr:hover {
+            background: #e8f5e8;
+        }
+        
+        .total-section {
+            float: right;
+            width: 320px;
+            margin-top: 20px;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 8px;
+        }
+        
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .total-row.subtotal {
+            font-size: 16px;
+            color: #555;
+        }
+        
+        .total-row.tax {
+            font-size: 16px;
+            color: #555;
+        }
+        
+        .total-row.final {
+            font-size: 22px;
+            font-weight: bold;
+            color: #8e44ad;
+            border-bottom: 3px double #8e44ad;
+            margin-top: 15px;
+            padding-top: 18px;
+        }
+        
+        .footer {
+            clear: both;
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 2px solid #ecf0f1;
+            text-align: center;
+            color: #666;
+        }
+        
+        .print-button {
+            background: linear-gradient(135deg, #8e44ad, #9b59b6);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-bottom: 20px;
+            font-size: 16px;
+            font-weight: bold;
+            box-shadow: 0 2px 8px rgba(142, 68, 173, 0.3);
+        }
+        
+        .print-button:hover {
+            background: linear-gradient(135deg, #7d3c98, #8e44ad);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body>
+    <div class="no-print">
+        <button class="print-button" onclick="window.print()">Print/Save as PDF</button>
+    </div>
+    
+    <div class="invoice-container">
+        <div class="invoice-header">
+            <div class="vendor-info">
+                <h1>Creative Media Hub</h1>
+                <p>789 Innovation Drive</p>
+                <p>Sector 18, Greater Noida</p>
+                <p>Uttar Pradesh 201301</p>
+                <p>India</p>
+                <p>Phone: +91 8765432109</p>
+                <p>Email: accounts@creativemediahub.in</p>
+                <p>GST: 09XYZAB5678M1N2</p>
+            </div>
+            <div class="invoice-details">
+                <h2>INVOICE</h2>
+            </div>
+        </div>
+        
+        <div class="invoice-meta">
+            <div class="bill-to">
+                <h3>Bill To:</h3>
+                <p><strong>StartUp Ventures Pvt. Ltd.</strong></p>
+                <p>321 Business Center</p>
+                <p>Phase 2, Sector 62</p>
+                <p>Gurugram, Haryana 122001</p>
+                <p>India</p>
+            </div>
+            
+            <div class="invoice-info">
+                <h3>Invoice Details:</h3>
+                <p><strong>Invoice Number:</strong> INV-2025-456</p>
+                <p><strong>Invoice Date:</strong> September 16, 2025</p>
+                <p><strong>Due Date:</strong> September 30, 2025</p>
+                <p><strong>Payment Terms:</strong> Net 14</p>
+            </div>
+        </div>
+        
+        <table class="invoice-table">
+            <thead>
+                <tr>
+                    <th>Item Description</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Logo Design & Brand Identity Package</td>
+                    <td>1</td>
+                    <td>₹35,000.00</td>
+                    <td>₹35,000.00</td>
+                </tr>
+                <tr>
+                    <td>Social Media Graphics (Set of 20)</td>
+                    <td>20</td>
+                    <td>₹800.00</td>
+                    <td>₹16,000.00</td>
+                </tr>
+                <tr>
+                    <td>Product Photography Session</td>
+                    <td>1</td>
+                    <td>₹22,000.00</td>
+                    <td>₹22,000.00</td>
+                </tr>
+                <tr>
+                    <td>Video Editing & Post-Production</td>
+                    <td>5</td>
+                    <td>₹4,500.00</td>
+                    <td>₹22,500.00</td>
+                </tr>
+                <tr>
+                    <td>Marketing Brochure Design</td>
+                    <td>3</td>
+                    <td>₹3,200.00</td>
+                    <td>₹9,600.00</td>
+                </tr>
+                <tr>
+                    <td>Website Banner Designs</td>
+                    <td>8</td>
+                    <td>₹1,250.00</td>
+                    <td>₹10,000.00</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="total-section">
+            <div class="total-row subtotal">
+                <span>Subtotal:</span>
+                <span>₹1,15,100.00</span>
+            </div>
+            <div class="total-row tax">
+                <span>GST (18%):</span>
+                <span>₹20,718.00</span>
+            </div>
+            <div class="total-row final">
+                <span>Total Amount:</span>
+                <span>₹1,35,818.00</span>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <p><strong>Payment Instructions:</strong></p>
+            <p>Payment due within 14 days. Bank details: HDFC Bank, A/C: 12345678901, IFSC: HDFC0001234</p>
+            <p>For any queries, contact us at accounts@creativemediahub.in</p>
+            <p><strong>Thank you for choosing Creative Media Hub!</strong></p>
+        </div>
+    </div>
+</body>
+</html>
