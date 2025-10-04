@@ -35,10 +35,25 @@ def create_app():
     if not os.path.exists(app.config['UPLOAD_FOLDER']):
         os.makedirs(app.config['UPLOAD_FOLDER'])
     
+    # Root endpoint: show all available routes
+    @app.route('/')
+    def list_routes():
+        routes = []
+        for rule in app.url_map.iter_rules():
+            if "static" not in rule.endpoint:
+                routes.append({
+                    'endpoint': rule.endpoint,
+                    'methods': list(rule.methods),
+                    'url': str(rule)
+                })
+        return {'available_routes': routes}
+    
+    # Health check endpoint
     @app.route('/api/health')
     def health_check():
         return {'status': 'healthy', 'message': 'Invoice-PO Matching Agent API is running'}
     
+    # Error handlers
     @app.errorhandler(413)
     def too_large(e):
         return {'error': 'File too large. Maximum size is 16MB.'}, 413
