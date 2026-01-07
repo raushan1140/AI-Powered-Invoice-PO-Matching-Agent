@@ -1,402 +1,573 @@
-# Invoice-PO Matching Agent
+# 🧾 Invoice-PO Matching Agent
 
-A professional hackathon-ready application that automates invoice validation against purchase orders using AI-powered document processing and natural language query capabilities.
+An AI-powered invoice validation system that automates invoice processing and purchase order matching using intelligent document processing, OCR, and natural language query capabilities.
 
-## 🚀 Features
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Python](https://img.shields.io/badge/python-3.8+-blue.svg)
+![React](https://img.shields.io/badge/react-18.0+-61dafb.svg)
+![Flask](https://img.shields.io/badge/flask-2.0+-green.svg)
 
-### Core Functionality
-- **Invoice Processing**: Upload PDF or image invoices for automatic data extraction
-- **OCR & Text Extraction**: Uses pdfplumber for PDFs and Tesseract OCR for images
-- **PO Validation**: Intelligent matching against purchase orders with mismatch detection
-- **Natural Language Queries**: Ask business questions in plain English, powered by GPT-4
-- **Real-time Leaderboard**: Track team performance and hackathon scoring
+---
 
-### AI-Powered Capabilities
-- **Document Intelligence**: Extract invoice numbers, vendors, dates, line items, and totals
-- **Fuzzy Matching**: Smart vendor and item matching using rapidfuzz
-- **SQL Translation**: Convert natural language to SQL queries
-- **Validation Engine**: Detect price, quantity, vendor, and item mismatches
+## 📋 Table of Contents
 
-### Professional UI
-- **Modern React Interface**: Built with Vite + React + Tailwind CSS
+- [Overview](#-overview)
+- [Features](#-features)
+- [Architecture](#-architecture)
+- [Technology Stack](#-technology-stack)
+- [Prerequisites](#-prerequisites)
+- [Installation](#-installation)
+- [Configuration](#-configuration)
+- [Usage](#-usage)
+- [API Documentation](#-api-documentation)
+- [Project Structure](#-project-structure)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Contact](#-contact)
+
+---
+
+## 🎯 Overview
+
+The Invoice-PO Matching Agent is a comprehensive solution for automating accounts payable workflows. It leverages AI and OCR technology to extract data from invoice documents, validate them against purchase orders, and provide intelligent business insights through natural language queries.
+
+### Key Highlights
+
+- **Automated Invoice Processing**: Extract data from PDF and image invoices automatically
+- **Intelligent Validation**: Match invoices against purchase orders with mismatch detection
+- **Natural Language Queries**: Ask business questions in plain English, get SQL-powered answers
+- **Real-time Analytics**: Interactive dashboards and leaderboard tracking
+- **Modern Tech Stack**: Built with Flask, React, and OpenAI GPT-4
+
+---
+
+## ✨ Features
+
+### 🔍 Document Intelligence
+- **Multi-format Support**: Process PDF, PNG, JPG, JPEG, TIFF, and BMP files
+- **OCR Processing**: Tesseract OCR with image preprocessing for optimal text extraction
+- **Smart Extraction**: Automatically identify invoice numbers, vendors, dates, line items, and totals
+- **Data Validation**: Comprehensive validation against purchase order database
+
+### 🤖 AI-Powered Capabilities
+- **Fuzzy Matching**: Intelligent vendor and item matching using advanced algorithms
+- **GPT-4 Integration**: Natural language to SQL query translation
+- **Mismatch Detection**: Identify discrepancies in prices, quantities, vendors, and items
+- **Query Suggestions**: Get intelligent query recommendations based on your data
+
+### 💼 Business Features
+- **Invoice Validation**: Approve/reject invoices with detailed mismatch reports
+- **Query Assistant**: Ask questions like "Show me total spend per vendor this quarter"
+- **Team Leaderboard**: Track performance metrics and competition scoring
+- **Export Capabilities**: Download results as CSV or Excel files
+
+### 🎨 User Experience
+- **Modern React UI**: Clean, responsive interface built with Tailwind CSS
+- **Drag-and-Drop Upload**: Easy file upload with progress tracking
 - **Interactive Charts**: Plotly.js visualizations for data analysis
-- **File Upload**: Drag-and-drop invoice upload with progress tracking
-- **Responsive Design**: Works on desktop and mobile devices
+- **Real-time Updates**: Live feedback and validation results
+
+---
 
 ## 🏗️ Architecture
 
 ```
-invoice-po-matching-agent/
-├── backend/                 # Flask API server
-│   ├── app.py              # Main Flask application
-│   ├── routes/             # API route handlers
-│   │   ├── invoice_routes.py    # Invoice upload & validation
-│   │   ├── query_routes.py      # Natural language queries
-│   │   └── leaderboard_routes.py # Team scoring
-│   ├── services/           # Core business logic
-│   │   ├── invoice_parser.py    # PDF/OCR processing
-│   │   ├── po_validator.py      # Validation engine
-│   │   └── query_engine.py      # NL to SQL translation
-│   ├── models/             # Database layer
-│   │   └── db_setup.py         # SQLite schema & operations
-│   └── requirements.txt    # Python dependencies
-├── frontend/               # React web application
-│   ├── src/
-│   │   ├── pages/          # Main application pages
-│   │   │   ├── InvoiceUpload.jsx   # Upload & validation UI
-│   │   │   ├── QueryAssistant.jsx  # Natural language interface
-│   │   │   └── Leaderboard.jsx     # Team rankings
-│   │   ├── components/     # Reusable UI components
-│   │   │   ├── FileUploader.jsx    # Drag-drop file upload
-│   │   │   ├── ResultsTable.jsx    # Data tables with export
-│   │   │   └── ChartDisplay.jsx    # Interactive charts
-│   │   └── App.jsx         # Main app with routing
-│   ├── package.json        # Node.js dependencies
-│   └── vite.config.js     # Vite configuration
-└── README.md              # This file
+┌─────────────────────────────────────────────────────────────┐
+│                      Frontend (React)                        │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │   Invoice    │  │    Query     │  │  Leaderboard │      │
+│  │   Upload     │  │  Assistant   │  │              │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                    REST API (HTTP/JSON)
+                            │
+┌─────────────────────────────────────────────────────────────┐
+│                    Backend (Flask API)                       │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │   Invoice    │  │      PO      │  │    Query     │      │
+│  │   Parser     │  │  Validator   │  │   Engine     │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+│         │                  │                  │              │
+│         ▼                  ▼                  ▼              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐      │
+│  │  pdfplumber  │  │  rapidfuzz   │  │  OpenAI GPT  │      │
+│  │  pytesseract │  │   matching   │  │  (optional)  │      │
+│  └──────────────┘  └──────────────┘  └──────────────┘      │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                    ┌───────▼────────┐
+                    │  SQLite        │
+                    │  Database      │
+                    │  - Invoices    │
+                    │  - POs         │
+                    │  - Teams       │
+                    └────────────────┘
 ```
+
+### Workflow
+
+1. **Invoice Upload** → User uploads invoice (PDF/Image)
+2. **Processing** → OCR extraction + data parsing
+3. **Validation** → Match against purchase orders
+4. **Results** → Display validation results with mismatch details
+5. **Query** → Natural language questions converted to SQL
+6. **Analytics** → Generate charts and reports
+
+---
 
 ## 🛠️ Technology Stack
 
 ### Backend
-- **Flask**: Python web framework for REST API
-- **SQLite**: Lightweight database for hackathon deployment
-- **pdfplumber**: PDF text extraction
-- **pytesseract**: OCR for image processing
-- **OpenCV**: Image preprocessing
-- **rapidfuzz**: Fuzzy string matching
-- **OpenAI GPT-4**: Natural language to SQL translation
+| Technology | Purpose |
+|------------|---------|
+| Flask | REST API framework |
+| SQLite | Lightweight database |
+| pdfplumber | PDF text extraction |
+| pytesseract | OCR for images |
+| OpenCV | Image preprocessing |
+| rapidfuzz | Fuzzy string matching |
+| OpenAI API | Natural language processing (optional) |
 
 ### Frontend
-- **React 18**: Modern UI framework
-- **Vite**: Fast build tool and dev server
-- **Tailwind CSS**: Utility-first styling
-- **Plotly.js**: Interactive data visualizations
-- **React Router**: Client-side routing
-- **Axios**: HTTP client for API calls
-
-### Database Schema
-```sql
--- Purchase Orders
-purchase_orders (po_id, vendor, item, qty, unit_price, total, date)
-
--- Processed Invoices
-invoices (invoice_id, vendor, item, qty, unit_price, total, date, po_id, status, validation_result)
-
--- Team Leaderboard
-leaderboard (team_id, team_name, score, validations_completed, queries_executed)
-
--- Query History
-query_history (natural_language_query, sql_query, execution_time, result_count, team_id)
-```
-
-## 🚀 Quick Start
-
-### Prerequisites
-- Python 3.8+
-- Node.js 16+
-- npm or yarn
-- Tesseract OCR (for image processing)
-
-### Backend Setup
-
-1. **Navigate to backend directory**
-   ```bash
-   cd invoice-po-matching-agent/backend
-   ```
-
-2. **Create virtual environment**
-   ```bash
-   python -m venv venv
-   
-   # Windows
-   venv\Scripts\activate
-   
-   # macOS/Linux
-   source venv/bin/activate
-   ```
-
-3. **Install dependencies**
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Install Tesseract OCR**
-   
-   **Windows:**
-   - Download from: https://github.com/UB-Mannheim/tesseract/wiki
-   - Add to PATH or set TESSDATA_PREFIX environment variable
-   
-   **macOS:**
-   ```bash
-   brew install tesseract
-   ```
-   
-   **Ubuntu/Debian:**
-   ```bash
-   sudo apt-get install tesseract-ocr
-   ```
-
-5. **Set up environment variables (optional)**
-   
-   **Option 1: Create .env file (Recommended)**
-   ```bash
-   # Create .env file in backend directory
-   echo OPENAI_API_KEY=your_openai_api_key_here > .env
-   ```
-   
-   **Option 2: Set environment variable**
-   
-   **Windows (PowerShell):**
-   ```powershell
-   $env:OPENAI_API_KEY="your_openai_api_key_here"
-   ```
-   
-   **macOS/Linux:**
-   ```bash
-   export OPENAI_API_KEY="your_openai_api_key_here"
-   ```
-
-6. **Initialize database and start server**
-   ```bash
-   python app.py
-   ```
-   
-   The backend will be available at `http://localhost:5000`
-
-### Frontend Setup
-
-1. **Navigate to frontend directory**
-   ```bash
-   cd invoice-po-matching-agent/frontend
-   ```
-
-2. **Install dependencies**
-   ```bash
-   npm install
-   ```
-
-3. **Start development server**
-   ```bash
-   npm run dev
-   ```
-   
-   The frontend will be available at `http://localhost:5173`
-
-## 🎯 Usage Guide
-
-### 1. Invoice Upload & Validation
-
-1. **Access the Invoice Upload page** (default homepage)
-2. **Enter your team ID** (optional, for leaderboard tracking)
-3. **Upload an invoice**:
-   - Drag and drop a PDF or image file
-   - Supported formats: PDF, PNG, JPG, JPEG, TIFF, BMP
-   - Maximum file size: 16MB
-4. **View results**:
-   - Extracted invoice data (vendor, amounts, line items)
-   - Validation status against purchase orders
-   - Detailed mismatch analysis
-
-### 2. Natural Language Queries
-
-1. **Go to Query Assistant page**
-2. **Enter your team ID** (optional, for scoring)
-3. **Ask questions in plain English**:
-   - "Show me total spend per vendor this quarter"
-   - "What are the recent invoices?"
-   - "Which team has completed the most validations?"
-4. **View results**:
-   - Automatically generated SQL query
-   - Interactive data tables
-   - Charts and visualizations
-
-### 3. Leaderboard & Competition
-
-1. **Visit the Leaderboard page**
-2. **View rankings by**:
-   - Overall score
-   - Number of validations completed
-   - Number of queries executed
-   - Recent activity
-3. **Track team performance** with real-time updates
-
-## 🏆 Scoring System
-
-- **Invoice Validation**: 20 points (approved), 10 points (processed)
-- **Natural Language Query**: 10 points per successful query
-- **SQL Query Execution**: 5 points per direct SQL query
-
-## 🔧 API Endpoints
-
-### Invoice Processing
-- `POST /api/invoices/upload` - Upload and process invoice
-- `GET /api/invoices/list` - List processed invoices
-- `GET /api/invoices/{id}` - Get invoice details
-- `POST /api/invoices/validate` - Validate invoice data
-
-### Query Engine
-- `POST /api/queries/execute` - Execute natural language query
-- `GET /api/queries/suggestions` - Get suggested queries
-- `GET /api/queries/history` - Query execution history
-- `POST /api/queries/translate` - Translate NL to SQL
-
-### Leaderboard
-- `GET /api/leaderboard/` - Get current rankings
-- `GET /api/leaderboard/team/{id}` - Get team statistics
-- `POST /api/leaderboard/update` - Update team scores
-- `POST /api/leaderboard/create-team` - Create new team
-
-## 🤖 AI Integration
-
-### GPT-4 Setup (Optional)
-For enhanced natural language processing:
-
-1. **Get OpenAI API key** from https://platform.openai.com/
-2. **Set environment variable**:
-
-   **Windows (PowerShell):**
-   ```powershell
-   $env:OPENAI_API_KEY="your-api-key-here"
-   ```
-   
-   **Windows (Command Prompt):**
-   ```cmd
-   set OPENAI_API_KEY=your-api-key-here
-   ```
-   
-   **macOS/Linux (Bash/Zsh):**
-   ```bash
-   export OPENAI_API_KEY="your-api-key-here"
-   ```
-   
-   **Alternative: Create .env file** (Recommended for development):
-   ```bash
-   # In the backend directory, create a .env file
-   echo "OPENAI_API_KEY=your-api-key-here" > .env
-   ```
-
-3. **Fallback system**: If no API key, uses pattern matching for common queries
-
-### OCR Configuration
-Tesseract OCR is used for image processing:
-- **Preprocessing**: Noise reduction, thresholding
-- **Text extraction**: Multi-language support
-- **Field extraction**: Regex patterns for invoice fields
-
-## 🛡️ Security Features
-
-- **File validation**: Type checking and size limits
-- **SQL injection protection**: Parameterized queries only
-- **Input sanitization**: XSS prevention
-- **CORS configuration**: Restricted to frontend domain
-
-## 🚀 Deployment
-
-### Production Deployment
-
-1. **Backend**:
-   ```bash
-   pip install gunicorn
-   gunicorn -w 4 -b 0.0.0.0:5000 app:app
-   ```
-
-2. **Frontend**:
-   ```bash
-   npm run build
-   # Serve dist/ folder with nginx or similar
-   ```
-
-3. **Environment**:
-   - Set `FLASK_ENV=production`
-   - Configure proper CORS origins
-   - Use PostgreSQL for production database
-
-### Docker Deployment (Optional)
-
-```dockerfile
-# Backend Dockerfile
-FROM python:3.9-slim
-WORKDIR /app
-COPY requirements.txt .
-RUN pip install -r requirements.txt
-COPY . .
-EXPOSE 5000
-CMD ["python", "app.py"]
-```
-
-## 🧪 Testing
-
-### Backend Testing
-```bash
-cd backend
-python -m pytest tests/
-```
-
-### Frontend Testing
-```bash
-cd frontend
-npm run test
-```
-
-## 📊 Sample Data
-
-The application comes with pre-loaded sample data:
-- **10 Purchase Orders** from various vendors
-- **5 Sample Teams** on the leaderboard
-- **Common query patterns** for testing
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit changes (`git commit -m 'Add AmazingFeature'`)
-4. Push to branch (`git push origin feature/AmazingFeature`)
-5. Open Pull Request
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 🎯 Hackathon Demo Script
-
-### 5-Minute Demo Flow
-
-1. **Introduction** (30s)
-   - "AI-powered invoice validation system"
-   - "Natural language business intelligence"
-
-2. **Invoice Upload Demo** (2 min)
-   - Upload sample invoice
-   - Show extracted data
-   - Highlight validation results
-   - Explain mismatch detection
-
-3. **Query Assistant Demo** (2 min)
-   - Ask "Show me total spend per vendor"
-   - Demonstrate SQL generation
-   - Show interactive charts
-   - Try another query live
-
-4. **Leaderboard & Scoring** (30s)
-   - Show real-time rankings
-   - Explain scoring system
-   - Highlight team competition aspect
-
-### Key Talking Points
-- **AI Integration**: OCR, fuzzy matching, GPT-4
-- **Business Value**: Automated AP process, data insights
-- **Technical Excellence**: Modern stack, scalable architecture
-- **User Experience**: Intuitive interface, real-time feedback
-
-## 🔗 Links
-
-- **Live Demo**: [Your deployment URL]
-- **GitHub Repository**: [Your GitHub URL]
-- **API Documentation**: `http://localhost:5000/api/health`
-- **Technical Blog Post**: [Your blog URL]
+| Technology | Purpose |
+|------------|---------|
+| React 18 | UI framework |
+| Vite | Build tool & dev server |
+| Tailwind CSS | Styling |
+| Plotly.js | Data visualization |
+| React Router | Client-side routing |
+| Axios | HTTP requests |
 
 ---
 
-**Built for Hackathon Excellence** 🏆  
-*Combining AI, modern web technologies, and intelligent document processing*
+## 📦 Prerequisites
+
+Before you begin, ensure you have the following installed:
+
+- **Python 3.8 or higher** ([Download](https://www.python.org/downloads/))
+- **Node.js 16 or higher** ([Download](https://nodejs.org/))
+- **npm or yarn** (comes with Node.js)
+- **Tesseract OCR** (for image processing)
+- **OpenAI API Key** (optional, for enhanced NL queries)
+
+### Installing Tesseract OCR
+
+**Windows:**
+1. Download installer from [UB-Mannheim](https://github.com/UB-Mannheim/tesseract/wiki)
+2. Run installer and note installation path
+3. Add to PATH or set `TESSDATA_PREFIX` environment variable
+
+**macOS:**
+```bash
+brew install tesseract
+```
+
+**Ubuntu/Debian:**
+```bash
+sudo apt-get update
+sudo apt-get install tesseract-ocr
+```
+
+**Verify installation:**
+```bash
+tesseract --version
+```
+
+---
+
+## 🚀 Installation
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/raushan1140/invoice-po-matching-agent.git
+cd invoice-po-matching-agent
+```
+
+### Step 2: Backend Setup
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Create virtual environment
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+```
+
+### Step 3: Frontend Setup
+
+```bash
+# Navigate to frontend directory (from project root)
+cd frontend
+
+# Install dependencies
+npm install
+```
+
+---
+
+## ⚙️ Configuration
+
+### Backend Configuration
+
+#### Option 1: Environment Variables (Recommended)
+
+Create a `.env` file in the `backend` directory:
+
+```bash
+# backend/.env
+OPENAI_API_KEY=your_openai_api_key_here
+FLASK_ENV=development
+DATABASE_PATH=./data/invoice_po.db
+UPLOAD_FOLDER=./uploads
+```
+
+#### Option 2: System Environment Variables
+
+**Windows (PowerShell):**
+```powershell
+$env:OPENAI_API_KEY="your_api_key_here"
+```
+
+**macOS/Linux:**
+```bash
+export OPENAI_API_KEY="your_api_key_here"
+```
+
+### Frontend Configuration
+
+Update API endpoint in `frontend/src/config.js` if needed:
+
+```javascript
+export const API_BASE_URL = 'http://localhost:5000/api';
+```
+
+### Getting OpenAI API Key (Optional)
+
+1. Visit [OpenAI Platform](https://platform.openai.com/)
+2. Sign up or log in
+3. Navigate to API Keys section
+4. Create a new secret key
+5. Copy and save it securely
+
+**Note:** The application works without OpenAI API key but with limited natural language query capabilities.
+
+---
+
+## 🎮 Usage
+
+### Starting the Application
+
+#### Terminal 1 - Backend Server
+
+```bash
+cd backend
+# Activate virtual environment first
+python app.py
+```
+
+Backend will run at: `http://localhost:5000`
+
+#### Terminal 2 - Frontend Server
+
+```bash
+cd frontend
+npm run dev
+```
+
+Frontend will run at: `http://localhost:5173`
+
+### Using the Application
+
+#### 1. Invoice Upload & Validation
+
+1. Open browser and go to `http://localhost:5173`
+2. Click on "Invoice Upload" (or use homepage)
+3. Enter your Team ID (optional)
+4. Drag and drop an invoice file or click to browse
+5. Wait for processing (OCR + validation)
+6. Review results:
+   - Extracted invoice data
+   - Validation status
+   - Detailed mismatch analysis
+
+#### 2. Natural Language Queries
+
+1. Navigate to "Query Assistant"
+2. Enter your Team ID (optional)
+3. Type a question in plain English:
+   - "Show me total spend per vendor"
+   - "List all invoices from last month"
+   - "Which items have the highest quantity?"
+4. View:
+   - Auto-generated SQL query
+   - Results table
+   - Interactive charts
+
+#### 3. Team Leaderboard
+
+1. Go to "Leaderboard" page
+2. View team rankings by:
+   - Total score
+   - Validations completed
+   - Queries executed
+3. Track real-time updates
+
+---
+
+## 📡 API Documentation
+
+### Base URL
+```
+http://localhost:5000/api
+```
+
+### Invoice Endpoints
+
+#### Upload Invoice
+```http
+POST /api/invoices/upload
+Content-Type: multipart/form-data
+
+Parameters:
+- file: Invoice file (PDF/Image)
+- team_id: Team identifier (optional)
+
+Response:
+{
+  "invoice_id": "INV001",
+  "extracted_data": {...},
+  "validation_result": {...},
+  "status": "approved|rejected|pending"
+}
+```
+
+#### List Invoices
+```http
+GET /api/invoices/list?team_id=TEAM001
+
+Response:
+{
+  "invoices": [
+    {
+      "invoice_id": "INV001",
+      "vendor": "ABC Corp",
+      "total": 1500.00,
+      "status": "approved"
+    }
+  ]
+}
+```
+
+### Query Endpoints
+
+#### Execute Natural Language Query
+```http
+POST /api/queries/execute
+Content-Type: application/json
+
+Body:
+{
+  "query": "Show me total spend per vendor",
+  "team_id": "TEAM001"
+}
+
+Response:
+{
+  "sql_query": "SELECT vendor, SUM(total) FROM invoices GROUP BY vendor",
+  "results": [...],
+  "chart_data": {...}
+}
+```
+
+### Leaderboard Endpoints
+
+#### Get Rankings
+```http
+GET /api/leaderboard/
+
+Response:
+{
+  "teams": [
+    {
+      "team_id": "TEAM001",
+      "team_name": "Alpha Team",
+      "score": 150,
+      "validations_completed": 5,
+      "queries_executed": 10
+    }
+  ]
+}
+```
+
+For complete API documentation, visit `/api/health` when server is running.
+
+---
+
+## 📁 Project Structure
+
+```
+invoice-po-matching-agent/
+│
+├── backend/
+│   ├── app.py                    # Flask application entry point
+│   ├── requirements.txt          # Python dependencies
+│   ├── .env                      # Environment variables (create this)
+│   │
+│   ├── routes/
+│   │   ├── invoice_routes.py     # Invoice endpoints
+│   │   ├── query_routes.py       # Query endpoints
+│   │   └── leaderboard_routes.py # Leaderboard endpoints
+│   │
+│   ├── services/
+│   │   ├── invoice_parser.py     # PDF/OCR processing
+│   │   ├── po_validator.py       # Validation logic
+│   │   └── query_engine.py       # NL to SQL translation
+│   │
+│   ├── models/
+│   │   └── db_setup.py           # Database schema & operations
+│   │
+│   ├── uploads/                  # Uploaded files (auto-created)
+│   └── data/
+│       └── invoice_po.db         # SQLite database (auto-created)
+│
+├── frontend/
+│   ├── package.json              # Node.js dependencies
+│   ├── vite.config.js           # Vite configuration
+│   ├── tailwind.config.js       # Tailwind CSS config
+│   │
+│   ├── src/
+│   │   ├── App.jsx               # Main application component
+│   │   ├── main.jsx              # Entry point
+│   │   │
+│   │   ├── pages/
+│   │   │   ├── InvoiceUpload.jsx
+│   │   │   ├── QueryAssistant.jsx
+│   │   │   └── Leaderboard.jsx
+│   │   │
+│   │   ├── components/
+│   │   │   ├── FileUploader.jsx
+│   │   │   ├── ResultsTable.jsx
+│   │   │   └── ChartDisplay.jsx
+│   │   │
+│   │   └── styles/
+│   │       └── index.css
+│   │
+│   └── public/                   # Static assets
+│
+├── README.md                     # This file
+├── LICENSE                       # MIT License
+└── .gitignore                   # Git ignore rules
+```
+
+---
+
+
+## 🤝 Contributing
+
+Contributions are welcome! Here's how you can help:
+
+1. **Fork the repository**
+2. **Create a feature branch**
+   ```bash
+   git checkout -b feature/AmazingFeature
+   ```
+3. **Commit your changes**
+   ```bash
+   git commit -m 'Add some AmazingFeature'
+   ```
+4. **Push to the branch**
+   ```bash
+   git push origin feature/AmazingFeature
+   ```
+5. **Open a Pull Request**
+
+### Development Guidelines
+
+- Follow PEP 8 style guide for Python code
+- Use ESLint and Prettier for JavaScript/React code
+- Write meaningful commit messages
+- Add tests for new features
+- Update documentation as needed
+
+---
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+```
+MIT License
+
+Copyright (c) 2025 raushan1140
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction...
+```
+
+---
+
+## 📞 Contact
+
+**Raushan Raj** - raj.raushan9101@gmail.com
+
+**Project Link:** [https://github.com/raushan1140/AI-Powered-Invoice-PO-Matching-Agent](https://github.com/raushan1140/AI-Powered-Invoice-PO-Matching-Agent)
+
+**LinkedIn:** https://www.linkedin.com/in/raushan1140/
+
+
+### Get in Touch
+
+- 🐛 Found a bug? [Open an issue](https://github.com/raushan1140/AI-Powered-Invoice-PO-Matching-Agent/issues)
+- 💡 Have a feature request? [Start a discussion](https://github.com/raushan1140/AI-Powered-Invoice-PO-Matching-Agent/discussions)
+- 📧 General inquiries: your.email@example.com
+
+---
+
+## 🙏 Acknowledgments
+
+- [OpenAI](https://openai.com/) for GPT-4 API
+- [Tesseract OCR](https://github.com/tesseract-ocr/tesseract) for text recognition
+- [Flask](https://flask.palletsprojects.com/) community
+- [React](https://reactjs.org/) team
+- All contributors and supporters
+
+---
+
+## 🔮 Future Enhancements
+
+- [ ] Multi-currency support
+- [ ] Email notification system
+- [ ] Advanced analytics dashboard
+- [ ] Mobile app (React Native)
+- [ ] Docker containerization
+- [ ] Cloud deployment guides (AWS, Azure, GCP)
+- [ ] Webhook integrations
+- [ ] Bulk invoice processing
+- [ ] Multi-language OCR support
+- [ ] API rate limiting
+
+---
+
+---
+
+<div align="center">
+
+**Built with ❤️ using AI and Modern Web Technologies**
+
+⭐ Star this repo if you find it helpful!
+
+[Report Bug](https://github.com/raushan1140/invoice-po-matching-agent/issues) · [Request Feature](https://github.com/raushan1140/invoice-po-matching-agent/issues) · [Documentation](https://github.com/raushan1140/invoice-po-matching-agent/wiki)
+
+</div>

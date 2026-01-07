@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { BASE_URL } from '../config/api';
 import { Search, Lightbulb, Clock, Database, Users, Code } from 'lucide-react';
 import ResultsTable from '../components/ResultsTable';
 import ChartDisplay from '../components/ChartDisplay';

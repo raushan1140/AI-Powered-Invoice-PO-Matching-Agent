@@ -2,10 +2,12 @@ Flask==3.0.0
 Flask-CORS==4.0.0
 pdfplumber==0.11.0
 pytesseract==0.3.10
-opencv-python==4.9.0.80
+numpy<2             # Explicitly set compatible NumPy version
+opencv-python==4.8.1.78   # Slightly lower version compatible with numpy<2
 Pillow>=10.2.0
 rapidfuzz==3.6.1
 openai==1.12.0
 werkzeug==3.0.1
 python-dotenv==1.0.1
 requests==2.31.0
+gunicorn==21.2.0
