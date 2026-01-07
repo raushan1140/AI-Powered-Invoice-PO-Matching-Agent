@@ -1,6 +1,8 @@
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { Upload, File, X, AlertCircle, CheckCircle } from 'lucide-react';
+import { API } from '../config/api';
+
 
 const FileUploader = ({ onFileUpload, loading, teamId }) => {
   const [uploadStatus, setUploadStatus] = useState(null);
@@ -20,7 +22,7 @@ const FileUploader = ({ onFileUpload, loading, teamId }) => {
         formData.append('team_id', teamId);
       }
 
-      const response = await fetch('/api/invoices/upload', {
+      const response = await fetch(`${API.INVOICES}/upload`, {
         method: 'POST',
         body: formData,
       });

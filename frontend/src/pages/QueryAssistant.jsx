@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { Search, Lightbulb, Clock, Database, Users, Code } from 'lucide-react';
 import ResultsTable from '../components/ResultsTable';
 import ChartDisplay from '../components/ChartDisplay';
+import { API } from '../config/api';
+
 
 const QueryAssistant = () => {
   const [query, setQuery] = useState('');
@@ -19,7 +21,7 @@ const QueryAssistant = () => {
 
   const fetchSuggestions = async () => {
     try {
-      const response = await fetch('/api/queries/suggestions');
+      const response = await fetch(`${API.QUERIES}/suggestions`);
       const data = await response.json();
       if (data.success) {
         setSuggestions(data.suggestions);
@@ -31,7 +33,7 @@ const QueryAssistant = () => {
 
   const fetchQueryHistory = async () => {
     try {
-      const response = await fetch('/api/queries/history?limit=5');
+      const response = await fetch(`${API.QUERIES}/history?limit=5`);
       const data = await response.json();
       if (data.success) {
         setHistory(data.history);
@@ -48,7 +50,7 @@ const QueryAssistant = () => {
     setResults(null);
 
     try {
-      const response = await fetch('/api/queries/execute', {
+      const response = await fetch(`${API.QUERIES}/execute`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

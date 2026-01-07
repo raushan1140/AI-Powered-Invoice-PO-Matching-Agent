@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, Medal, Star, TrendingUp, Users, Activity, Calendar, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import ChartDisplay from '../components/ChartDisplay';
+import { API } from '../config/api';
+
 
 const Leaderboard = () => {
   const [leaderboard, setLeaderboard] = useState([]);
@@ -38,11 +40,12 @@ const Leaderboard = () => {
   const fetchLeaderboardData = async () => {
     setLoading(true);
     try {
-      const [leaderboardRes, statsRes, rankingsRes] = await Promise.all([
-        fetch('/api/leaderboard/'),
-        fetch('/api/leaderboard/stats'),
-        fetch('/api/leaderboard/rankings')
-      ]);
+  const [leaderboardRes, statsRes, rankingsRes] = await Promise.all([
+    fetch(`${API.LEADERBOARD}/`),
+    fetch(`${API.LEADERBOARD}/stats`),
+    fetch(`${API.LEADERBOARD}/rankings`)
+  ]);
+
 
       const [leaderboardData, statsData, rankingsData] = await Promise.all([
         leaderboardRes.json(),
@@ -70,7 +73,7 @@ const Leaderboard = () => {
 
   const fetchRealtimeActivity = async () => {
     try {
-      const response = await fetch('/api/leaderboard/activity');
+      const response = await fetch(`${API.LEADERBOARD}/activity`);
       const data = await response.json();
       
       if (data.success) {
@@ -98,7 +101,7 @@ const Leaderboard = () => {
   // Team Management Functions
   const createTeam = async (teamData) => {
     try {
-      const response = await fetch('/api/leaderboard/create-team', {
+      const response = await fetch(`${API.LEADERBOARD}/create-team`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(teamData)
@@ -121,7 +124,7 @@ const Leaderboard = () => {
 
   const updateTeamScore = async (teamId, updates) => {
     try {
-      const response = await fetch('/api/leaderboard/update', {
+      const response = await fetch(`${API.LEADERBOARD}/update`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -151,7 +154,7 @@ const Leaderboard = () => {
     
     try {
       // Note: We need to add a delete endpoint to the backend
-      const response = await fetch(`/api/leaderboard/team/${teamId}`, {
+      const response = await fetch(`${API.LEADERBOARD}/team/${teamId}`, {
         method: 'DELETE'
       });
       
