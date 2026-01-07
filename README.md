@@ -531,7 +531,7 @@ in the Software without restriction...
 
 - 🐛 Found a bug? [Open an issue](https://github.com/raushan1140/AI-Powered-Invoice-PO-Matching-Agent/issues)
 - 💡 Have a feature request? [Start a discussion](https://github.com/raushan1140/AI-Powered-Invoice-PO-Matching-Agent/discussions)
-- 📧 General inquiries: your.email@example.com
+- 📧 General inquiries: raj.raushan9101@gmail.com
 
 ---
 
