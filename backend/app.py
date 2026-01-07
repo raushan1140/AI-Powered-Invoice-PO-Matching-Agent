@@ -22,10 +22,18 @@ def create_app():
     app.config['UPLOAD_FOLDER'] = 'uploads'
 
     # ✅ Enable CORS for local + Vercel frontend
-    CORS(app, origins=[
-        'http://localhost:5173',  # for local development
-        'https://ai-powered-invoice-po-matching-agen.vercel.app'  # Vercel production frontend
-    ])
+    CORS(
+        app,
+        resources={r"/api/*": {
+            "origins": [
+                "http://localhost:5173",
+                "http://127.0.0.1:5173",
+                "https://ai-powered-invoice-po-matching-agen.vercel.app"
+            ]
+        }},
+        supports_credentials=True
+    )
+
 
     # Initialize database
     init_db()

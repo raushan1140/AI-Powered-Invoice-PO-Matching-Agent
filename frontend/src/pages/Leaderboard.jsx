@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { BASE_URL } from '../config/api';
 import { Trophy, Medal, Star, TrendingUp, Users, Activity, Calendar, Plus, Edit, Trash2, Save, X } from 'lucide-react';
 import ChartDisplay from '../components/ChartDisplay';
 import { API } from '../config/api';
